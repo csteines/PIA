@@ -154,9 +154,11 @@
                     var src = $("#srcin").val();
                     var f = "add";
                     
-                    $.post('data.php', {PID: '1', f: f, number: number, brand: brand, model: model, 
+                    $.post('data/data.php', {PID: '1', f: f, number: number, brand: brand, model: model, 
                                          description: description, qty: qty, cost: cost, src: src }, function(data) {
                                        //Execute code to reset all inputs
+                        console.log(data);
+                        
                         $("#itemin").val('');
                         $("#brandin").val('');
                         $("#modelin").val('');
@@ -180,6 +182,27 @@
                 {
                   $(this).trigger("enterKey");
                 }
+            });
+            
+            $("#jqxgrid").on('cellendedit', function (event){
+                var rowData = args.row;
+                
+                var value = args.value;
+                var column = event.args.datafield;
+                var id = $('#jqxgrid').jqxGrid('getrowid', event.args.rowindex);
+                var f = "update";
+                
+                $.post('data/data.php', {id: id, f: f, value: value, column: column}, function(data) {
+                     console.log(data);                 
+                });
+                
+                console.log(value + " " + column + " " + id);
+                
+//                console.log(rowData);
+//                console.log(rowData['description']);
+//                console.log(args.value);
+//                console.log(rowData['description']);
+//                console.log(event.args.datafield);
             });
         });
     </script>

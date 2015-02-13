@@ -11,7 +11,7 @@ if ($bool === False){
    print "can't find $database";
 }
 
-if(isset($_GET['f'])){$f = $_GET['f'];}
+if(isset($_POST['f'])){$f = $_POST['f'];}
 
 else{
     // get data and store in a json array
@@ -35,36 +35,36 @@ else{
 	echo json_encode($members);
 }
 
-if ($f = "add")
+if ($f == "add")
 {
     //GET all variable values
-    $PID = $_GET['PID'];
-    $number = $_GET['number'];
-    $brand = $_GET['brand'];
-    $model = $_GET['model'];
-    $description = $_GET['description'];
-    $qty = $_GET['qty'];
-    $cost = $_GET['cost'];
-    $src = $_GET['src'];
+    $PID = $_POST['PID'];
+    $number = $_POST['number'];
+    $brand = $_POST['brand'];
+    $model = $_POST['model'];
+    $description = $_POST['description'];
+    $qty = $_POST['qty'];
+    $cost = $_POST['cost'];
+    $src = $_POST['src'];
     
     // INSERT COMMAND 
-    $insert_query = "INSERT INTO `items`(`PID`, `number`, `brand`, `model`, `description`, `qty`, `cost`, 'src') VALUES ('".$PID."','".$number."','".$brand."','".$model."','".$description."','".$qty."','".$cost."','".$src."')";
+    $insert_query = "INSERT INTO `items`(`PID`, `number`, `brand`, `model`, `description`, `qty`, `cost`, `src`) VALUES ('".$PID."','".$number."','".$brand."','".$model."','".$description."','".$qty."','".$cost."','".$src."')";
 	
    $result = mysql_query($insert_query) or die("SQL Error 1: " . mysql_error());
-   echo $result;
+   //$result = $PID ." ".$number." ".$brand." ".$model." ".$description." ".$qty." ".$cost." ".$src;
+    echo $result;
 }
-//else if (isset($_GET['update']))
-//{
-//	// UPDATE COMMAND 
-//	$update_query = "UPDATE `members` SET `fname`='".$_GET['fname']."',
-//	`lname`='".$_GET['lname']."',
-//	`phone`='".$_GET['phone']."',
-//	`email`='".$_GET['email']."',
-//	`position`='".$_GET['position']."',
-//	`rank`='".$_GET['rank']."' WHERE `idnumber`='".$_GET['idnumber']."'";
-//	 $result = mysql_query($update_query) or die("SQL Error 1: " . mysql_error());
-//     echo $result;
-//}
+else if ($f == "update")
+{
+    $column = $_POST['column'];
+    $value = $_POST['value'];
+    $id = $_POST['id'];
+
+    // UPDATE COMMAND 
+    $update_query = "UPDATE `items` SET `".$column."`='".$value."' WHERE `ID`='".$id."'";
+     $result = mysql_query($update_query) or die("SQL Error 1: " . mysql_error());
+     echo $result;
+}
 //else if (isset($_GET['delete']))
 //{
 //	// DELETE COMMAND 
